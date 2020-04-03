@@ -1,4 +1,5 @@
 import { Component, h } from '@stencil/core';
+import * as canteenList from '../db';
 
 @Component({
     tag: 'app-home',
@@ -6,22 +7,29 @@ import { Component, h } from '@stencil/core';
 })
 export class AppHome {
 
+    componentDidLoad() {
+        console.log(canteenList);
+    }
+
     render() {
         return [
             <ion-header>
                 <ion-toolbar color="primary">
-                    <ion-segment color='light'>
-                        <ion-segment-button value="friends">
-                            <ion-label>Friends</ion-label>
-                        </ion-segment-button>
-                        <ion-segment-button value="enemies">
-                            <ion-label>Enemies</ion-label>
-                        </ion-segment-button>
-                    </ion-segment>
+                    <ion-title>Amam Unavagam</ion-title>
                </ion-toolbar>
             </ion-header>,
 
             <ion-content class="ion-padding">
+
+                <ion-segment value="listing">
+                    <ion-segment-button value="listing">
+                        <ion-label>Listing</ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button value="map">
+                        <ion-label>Map</ion-label>
+                    </ion-segment-button>
+                </ion-segment>
+
                 <p>
                     Welcome to the PWA Toolkit. You can use this starter to build entire
                     apps with web components using Stencil and ionic/core! Check out the
