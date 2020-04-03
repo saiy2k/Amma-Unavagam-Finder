@@ -1,5 +1,7 @@
-import { Component, h } from '@stencil/core';
-import * as canteenList from '../db';
+import { Component, h       }   from    '@stencil/core';
+import { State              }   from    '@stencil/core';
+import * as canteenDB from '../db';
+//import * as canteenDB from '../dbmini';
 
 @Component({
     tag: 'app-home',
@@ -7,8 +9,29 @@ import * as canteenList from '../db';
 })
 export class AppHome {
 
-    componentDidLoad() {
-        console.log(canteenList);
+    fullList                    =   canteenDB.default;
+
+    @State()
+    filteredList                =   [];
+
+    componentWillLoad() {
+        this.filteredList       =   this.fullList.slice(0, 30);
+        console.log(this.fullList);
+        console.log(this.filteredList);
+    }
+
+    searchTermChanged(ev) {
+        const searchTerm        =   ev.detail.value.toLowerCase();
+        console.log(searchTerm);
+        console.log(this);
+        if ( searchTerm.length > 2 ) {
+            this.filteredList   =   this.fullList.filter(canteen => {
+                return canteen.zoneName.toLowerCase().includes(searchTerm) ||
+                    canteen.address.toLowerCase().includes(searchTerm);
+            });
+        } else {
+            this.filteredList   =   this.fullList.slice(0, 30);
+        }
     }
 
     render() {
@@ -16,28 +39,42 @@ export class AppHome {
             <ion-header>
                 <ion-toolbar color="primary">
                     <ion-title>Amam Unavagam</ion-title>
-               </ion-toolbar>
+                </ion-toolbar>
+                <ion-toolbar color="primary">
+                    <ion-searchbar debounce={ 500 } onIonChange={ this.searchTermChanged.bind(this) }></ion-searchbar>
+                </ion-toolbar>
             </ion-header>,
 
             <ion-content class="ion-padding">
 
-                <ion-segment value="listing">
-                    <ion-segment-button value="listing">
-                        <ion-label>Listing</ion-label>
-                    </ion-segment-button>
-                    <ion-segment-button value="map">
-                        <ion-label>Map</ion-label>
-                    </ion-segment-button>
-                </ion-segment>
+                { this.filteredList.length > 0 ? this.filteredList.map((canteen, index) =>
+                    <ion-card>
+                        <ion-card-header>
+                            <ion-card-title> { canteen.zoneName + ' - ' + (index + 1) } </ion-card-title>
+                        </ion-card-header>
 
-                <p>
-                    Welcome to the PWA Toolkit. You can use this starter to build entire
-                    apps with web components using Stencil and ionic/core! Check out the
-                    README for everything that comes in this starter out of the box and
-                    check out our docs on <a href="https://stenciljs.com">stenciljs.com</a> to get started.
-                </p>
+                        <ion-card-content>
+                            { canteen.address }
+                            <br/>
+                            <ion-button href={canteen.mapLocation} target="_blank" rel="noopener" fill="outline" slot="end">View in maps</ion-button>
+                        </ion-card-content>
+                    </ion-card>
+                    ) :
+                    <h2 class='center-text empty-message'>
+                        No results. Refine your search
+                    </h2>
+                }
 
-                <ion-button href="/profile/ionic" expand="block">Profile page</ion-button>
+                { this.filteredList.length > 0 ?
+                    <h2 class='center-text'>
+                        Search to see more canteens
+                    </h2> :
+                    <h2>
+                    </h2>
+
+
+                }
+
             </ion-content>
         ];
     }

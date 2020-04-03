@@ -1,0 +1,8 @@
+.empty-message {
+    margin-top                  :   100px;
+}
+
+.center-text {
+    text-align                  :   center;
+    color                       :   var(--ion-color-primary);
+}
