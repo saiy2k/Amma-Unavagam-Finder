@@ -3,11 +3,11 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Amma Unavagam Finder</title>
+        <title>Amma Unavagam Finder - Chennai</title>
 
         <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="description" content="Easily accessibly Amma unavagam (canteen) list in and around Chennai">
-        <meta name="keywords" content="amma, unavagam, canteen, list, chennai, idly, sambar, rice, chapathi">
+        <meta name="description" content="Easily accessibly Amma unavagam (canteen) list in and around Chennai with Google map location">
+        <meta name="keywords" content="amma, unavagam, canteen, list, chennai, google, map, location, idly, sambar, rice, chapathi">
         <meta name="theme-color" content="#52884F">
 
         <meta name="format-detection" content="telephone=no">
@@ -31,6 +31,30 @@
     <body>
 
         <app-root></app-root>
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+            <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-analytics.js"></script>
+
+            <script>
+                // Your web app's Firebase configuration
+                var firebaseConfig = {
+                    apiKey: "AIzaSyBKYIT1WqD_VeHQwwyQGktSnNFT4vdosXg",
+                    authDomain: "amma-unavagam.firebaseapp.com",
+                    databaseURL: "https://amma-unavagam.firebaseio.com",
+                    projectId: "amma-unavagam",
+                    storageBucket: "amma-unavagam.appspot.com",
+                    messagingSenderId: "373296548828",
+                    appId: "1:373296548828:web:999a8807dba10ff2cedd19",
+                    measurementId: "G-EFR9XJ3WYQ"
+                };
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                firebase.analytics();
+            </script>
 
     </body>
 

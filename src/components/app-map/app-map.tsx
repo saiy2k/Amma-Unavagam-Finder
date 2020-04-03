@@ -1,13 +1,13 @@
 import { Component, h       }   from    '@stencil/core';
 import { State              }   from    '@stencil/core';
 import * as canteenDB from '../db';
-//import * as canteenDB from '../dbmini';
 
 @Component({
-    tag: 'app-home',
-    styleUrl: 'app-home.css'
+    tag: 'app-map',
+    styleUrl: 'app-map.css',
+    shadow: true,
 })
-export class AppHome {
+export class AppMap {
 
     fullList                    =   canteenDB.default;
     initialList                 =   [];
@@ -70,6 +70,7 @@ export class AppHome {
         }
     }
 
+
     nearbyClicked(ev) {
         alert('For phase 2');
     }
@@ -81,7 +82,7 @@ export class AppHome {
                     <ion-title> <h1> Amam Unavagam - Finder </h1> </ion-title>
                     <ion-buttons slot="secondary">
                         <ion-button fill="outline" onClick={ this.nearbyClicked.bind(this) }> List nearby </ion-button>
-                            <ion-button fill="outline" href="/map"> Map view </ion-button>
+                        <ion-button fill="outline" href="/"> List view </ion-button>
                     </ion-buttons>
                 </ion-toolbar>
                 <ion-toolbar color="primary">
@@ -89,35 +90,10 @@ export class AppHome {
                 </ion-toolbar>
             </ion-header>,
 
-            <ion-content class="ion-padding">
-
-                { this.filteredList.length > 0 ? this.filteredList.map((canteen, index) =>
-                    <ion-card>
-                        <ion-card-header>
-                            <ion-card-title> { canteen.zoneName + ' - ' + (index + 1) } </ion-card-title>
-                        </ion-card-header>
-
-                        <ion-card-content>
-                            { canteen.address }
-                            <br/>
-                            <ion-button href={canteen.mapLocation} target="_blank" rel="noopener" fill="outline" slot="end">View in maps</ion-button>
-                        </ion-card-content>
-                    </ion-card>
-                    ) :
-                    <h2 class='center-text empty-message'>
-                        No Canteens for your search. Please refine your search
-                    </h2>
-                }
-
-                { this.moreLabel ?
-                    <h4 class='center-text'>
-                        More relevant canteens will appear as you search
-                    </h4> :
-                    <h2>
-                    </h2>
-                }
-
+            <ion-content>
+                <h2> Maps </h2>
             </ion-content>
         ];
     }
+
 }
