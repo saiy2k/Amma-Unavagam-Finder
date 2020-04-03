@@ -9,7 +9,8 @@ export const config: Config = {
             globPatterns: [
                 '**/*.{js,css,json,html,ico,png}'
             ]
-        }
+        },
+        baseUrl: 'https://ammaunavagam.in'
     }],
     globalScript: 'src/global/app.ts',
     globalStyle: 'src/global/app.css'

@@ -1,4 +1,7 @@
 import { Component, h } from '@stencil/core';
+import { Prop, Listen } from '@stencil/core';
+
+declare var HTMLIonToastControllerElement: any;
 
 @Component({
     tag: 'app-root',
@@ -7,7 +10,7 @@ import { Component, h } from '@stencil/core';
 export class AppRoot {
 
     @Prop({ connect: 'ion-toast-controller' })
-    toastCtrl: HTMLIonToastControllerElement;
+    toastCtrl: typeof HTMLIonToastControllerElement;
 
     @Listen("swUpdate", { target: 'window' })
     async onSWUpdate() {
