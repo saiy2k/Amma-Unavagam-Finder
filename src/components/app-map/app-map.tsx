@@ -1,13 +1,12 @@
 import { Component, h       }   from    '@stencil/core';
 import { State              }   from    '@stencil/core';
 import * as canteenDB from '../db';
-//import * as canteenDB from '../dbmini';
 
 @Component({
-    tag: 'app-home',
-    styleUrl: 'app-home.css'
+    tag: 'app-map',
+    styleUrl: 'app-map.css'
 })
-export class AppHome {
+export class AppMap {
 
     fullList                    =   canteenDB.default;
     initialList                 =   [];
@@ -50,10 +49,14 @@ export class AppHome {
             this.fullList[390],     // Sozhinganallur
         ];
         this.filteredList       =   [ ...this.initialList ];
+        console.log(this.fullList);
+        console.log(this.filteredList);
     }
 
     searchTermChanged(ev) {
         const searchTerm        =   ev.detail.value.toLowerCase();
+        console.log(searchTerm);
+        console.log(this);
         if ( searchTerm.length > 2 ) {
             this.filteredList   =   this.fullList.filter(canteen => {
                 return canteen.zoneName.toLowerCase().includes(searchTerm) ||
@@ -66,6 +69,7 @@ export class AppHome {
         }
     }
 
+
     nearbyClicked() {
         alert('For phase 2');
     }
@@ -74,15 +78,13 @@ export class AppHome {
         return [
             <ion-header>
                 <ion-toolbar color="primary">
-                    <ion-title> <h1> Listing - Amaa Unavagam - Finder </h1> </ion-title>
+                    <ion-buttons slot="start">
+                        <ion-back-button defaultHref="/" />
+                    </ion-buttons>
+                    <ion-title> <h1> Maps - Amam Unavagam - Finder </h1> </ion-title>
                     <ion-buttons slot="secondary">
-                        {/*
                         <ion-button fill="outline" onClick={ this.nearbyClicked.bind(this) }> List nearby </ion-button>
-                        <ion-button fill="outline" href="/map"> Map view </ion-button>
-                          */}
-                        <ion-button fill="outline" href="/info">
-                            <ion-icon slot="icon-only" name="information-outline"></ion-icon>
-                        </ion-button>
+                        <ion-button fill="outline" href="/"> List view </ion-button>
                     </ion-buttons>
                 </ion-toolbar>
                 <ion-toolbar color="primary">
@@ -90,37 +92,10 @@ export class AppHome {
                 </ion-toolbar>
             </ion-header>,
 
-            <ion-content class="ion-padding">
-
-                { this.filteredList.length > 0 ? this.filteredList.map((canteen, index) =>
-                    <ion-card>
-                        <ion-card-header>
-                            <ion-card-title> { canteen.zoneName + ' - ' + (index + 1) } </ion-card-title>
-                        </ion-card-header>
-
-                        <ion-card-content>
-                            { canteen.address }
-                            <br/>
-                            <ion-button href={canteen.mapLocation} target="_blank" rel="noopener" fill="outline" slot="end">Get Directions</ion-button>
-                        </ion-card-content>
-                    </ion-card>
-                    ) :
-                    <h2 class='center-text empty-message'>
-                        No Canteens for your search. Please refine your search
-                    </h2>
-                }
-
-                { this.moreLabel ?
-                    <h4 class='center-text'>
-                        More relevant canteens will appear as you search
-                    </h4> :
-                    <h2>
-                    </h2>
-                }
-
-                <h6 class="center-text"> Amma Unavagam - Finder. Chennai, India. </h6>
-
+            <ion-content>
+                <h2> Maps Todo </h2>
             </ion-content>
         ];
     }
+
 }
