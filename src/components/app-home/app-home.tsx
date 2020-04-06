@@ -9,46 +9,18 @@ import * as canteenDB from '../db';
 })
 export class AppHome {
 
-    fullList                    =   canteenDB.default;
-    initialList                 =   [];
+    private fullList            =   canteenDB.default;
+    private initialList         =   [];
 
-    @State()
-    filteredList                =   [];
-
-    @State()
-    moreLabel                   =   true;
+    @State() filteredList       =   [];
+    @State() moreLabel          =   true;
 
     componentWillLoad() {
-        this.initialList        =   [
-            this.fullList[0],       // Thiruvottyur
-            this.fullList[1],       // Thiruvottyur
-            this.fullList[25],      // Manali
-            this.fullList[26],      // Manali
-            this.fullList[41],      // Madhavaram
-            this.fullList[42],      // Madhavaram
-            this.fullList[65],      // Tondiarpet
-            this.fullList[66],      // Tondiarpet
-            this.fullList[95],      // Royapuram
-            this.fullList[96],      // Royapuram
-            this.fullList[130],     // Thiruvika Nagar
-            this.fullList[131],     // Thiruvika Nagar
-            this.fullList[160],     // Ambattur
-            this.fullList[161],     // Ambattur
-            this.fullList[190],     // Shenoy Nagar
-            this.fullList[191],     // Shenoy Nagar
-            this.fullList[221],     // Nungambakkam
-            this.fullList[222],     // Nungambakkam
-            this.fullList[259],     // Kodambakkam
-            this.fullList[260],     // Kodambakkam
-            this.fullList[291],     // Valasaravakam
-            this.fullList[292],     // Valasaravakam
-            this.fullList[317],     // Alandur
-            this.fullList[318],     // Alandur
-            this.fullList[341],     // Perungudi
-            this.fullList[342],     // Perungudi
-            this.fullList[389],     // Sozhinganallur
-            this.fullList[390],     // Sozhinganallur
-        ];
+        const indices           =   [0, 25, 41, 65, 95, 130, 160, 190, 221, 259, 291, 317, 341, 389];
+        indices.forEach(i => {
+            this.initialList.push(this.fullList[i]);
+            this.initialList.push(this.fullList[i + 1]);
+        });
         this.filteredList       =   [ ...this.initialList ];
     }
 
@@ -93,17 +65,7 @@ export class AppHome {
             <ion-content class="ion-padding">
 
                 { this.filteredList.length > 0 ? this.filteredList.map((canteen, index) =>
-                    <ion-card>
-                        <ion-card-header>
-                            <ion-card-title> { canteen.zoneName + ' - ' + (index + 1) } </ion-card-title>
-                        </ion-card-header>
-
-                        <ion-card-content>
-                            { canteen.address }
-                            <br/>
-                            <ion-button href={canteen.mapLocation} target="_blank" rel="noopener" fill="outline" slot="end">Get Directions</ion-button>
-                        </ion-card-content>
-                    </ion-card>
+                    <canteen-card index={ index } canteen={ canteen }></canteen-card>
                     ) :
                     <h2 class='center-text empty-message'>
                         No Canteens for your search. Please refine your search
