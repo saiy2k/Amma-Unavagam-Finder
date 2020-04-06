@@ -50,14 +50,10 @@ export class AppHome {
             this.fullList[390],     // Sozhinganallur
         ];
         this.filteredList       =   [ ...this.initialList ];
-        console.log(this.fullList);
-        console.log(this.filteredList);
     }
 
     searchTermChanged(ev) {
         const searchTerm        =   ev.detail.value.toLowerCase();
-        console.log(searchTerm);
-        console.log(this);
         if ( searchTerm.length > 2 ) {
             this.filteredList   =   this.fullList.filter(canteen => {
                 return canteen.zoneName.toLowerCase().includes(searchTerm) ||
@@ -70,7 +66,7 @@ export class AppHome {
         }
     }
 
-    nearbyClicked(ev) {
+    nearbyClicked() {
         alert('For phase 2');
     }
 
@@ -78,10 +74,15 @@ export class AppHome {
         return [
             <ion-header>
                 <ion-toolbar color="primary">
-                    <ion-title> <h1> Amam Unavagam - Finder </h1> </ion-title>
+                    <ion-title> <h1> Listing - Amaa Unavagam - Finder </h1> </ion-title>
                     <ion-buttons slot="secondary">
+                        {/*
                         <ion-button fill="outline" onClick={ this.nearbyClicked.bind(this) }> List nearby </ion-button>
-                            <ion-button fill="outline" href="/map"> Map view </ion-button>
+                        <ion-button fill="outline" href="/map"> Map view </ion-button>
+                          */}
+                        <ion-button fill="outline" href="/info">
+                            <ion-icon slot="icon-only" name="information-outline"></ion-icon>
+                        </ion-button>
                     </ion-buttons>
                 </ion-toolbar>
                 <ion-toolbar color="primary">
@@ -100,7 +101,7 @@ export class AppHome {
                         <ion-card-content>
                             { canteen.address }
                             <br/>
-                            <ion-button href={canteen.mapLocation} target="_blank" rel="noopener" fill="outline" slot="end">View in maps</ion-button>
+                            <ion-button href={canteen.mapLocation} target="_blank" rel="noopener" fill="outline" slot="end">Get Directions</ion-button>
                         </ion-card-content>
                     </ion-card>
                     ) :
@@ -116,6 +117,8 @@ export class AppHome {
                     <h2>
                     </h2>
                 }
+
+                <h6 class="center-text"> Amma Unavagam - Finder. Chennai, India. </h6>
 
             </ion-content>
         ];

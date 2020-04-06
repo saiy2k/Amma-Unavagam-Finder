@@ -4,8 +4,7 @@ import * as canteenDB from '../db';
 
 @Component({
     tag: 'app-map',
-    styleUrl: 'app-map.css',
-    shadow: true,
+    styleUrl: 'app-map.css'
 })
 export class AppMap {
 
@@ -71,7 +70,7 @@ export class AppMap {
     }
 
 
-    nearbyClicked(ev) {
+    nearbyClicked() {
         alert('For phase 2');
     }
 
@@ -79,7 +78,10 @@ export class AppMap {
         return [
             <ion-header>
                 <ion-toolbar color="primary">
-                    <ion-title> <h1> Amam Unavagam - Finder </h1> </ion-title>
+                    <ion-buttons slot="start">
+                        <ion-back-button defaultHref="/" />
+                    </ion-buttons>
+                    <ion-title> <h1> Maps - Amam Unavagam - Finder </h1> </ion-title>
                     <ion-buttons slot="secondary">
                         <ion-button fill="outline" onClick={ this.nearbyClicked.bind(this) }> List nearby </ion-button>
                         <ion-button fill="outline" href="/"> List view </ion-button>
@@ -91,7 +93,7 @@ export class AppMap {
             </ion-header>,
 
             <ion-content>
-                <h2> Maps </h2>
+                <h2> Maps Todo </h2>
             </ion-content>
         ];
     }

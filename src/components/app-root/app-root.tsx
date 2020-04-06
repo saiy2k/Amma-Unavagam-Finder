@@ -43,6 +43,7 @@ export class AppRoot {
                     <ion-route url="/" component="app-home" />
                     <ion-route url="/profile/:name" component="app-profile" />
                     <ion-route url="/map" component="app-map" />
+                    <ion-route url="/info" component="app-info" />
                 </ion-router>
                 <ion-nav />
             </ion-app>

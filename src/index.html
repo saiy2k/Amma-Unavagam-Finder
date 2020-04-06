@@ -10,7 +10,9 @@
         <meta name="keywords" content="amma, unavagam, canteen, list, chennai, google, map, location, idly, sambar, rice, chapathi">
         <meta name="theme-color" content="#52884F">
 
+        <!--
         <meta name="format-detection" content="telephone=no">
+        -->
         <meta name="msapplication-tap-highlight" content="no">
 
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -40,20 +42,21 @@
             <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-analytics.js"></script>
 
             <script>
-                // Your web app's Firebase configuration
-                var firebaseConfig = {
-                    apiKey: "AIzaSyBKYIT1WqD_VeHQwwyQGktSnNFT4vdosXg",
-                    authDomain: "amma-unavagam.firebaseapp.com",
-                    databaseURL: "https://amma-unavagam.firebaseio.com",
-                    projectId: "amma-unavagam",
-                    storageBucket: "amma-unavagam.appspot.com",
-                    messagingSenderId: "373296548828",
-                    appId: "1:373296548828:web:999a8807dba10ff2cedd19",
-                    measurementId: "G-EFR9XJ3WYQ"
-                };
-                // Initialize Firebase
-                firebase.initializeApp(firebaseConfig);
-                firebase.analytics();
+                if (window.document.location.href === 'https://ammaunavagam.in/') {
+                    var firebaseConfig = {
+                        apiKey: "AIzaSyBKYIT1WqD_VeHQwwyQGktSnNFT4vdosXg",
+                        authDomain: "amma-unavagam.firebaseapp.com",
+                        databaseURL: "https://amma-unavagam.firebaseio.com",
+                        projectId: "amma-unavagam",
+                        storageBucket: "amma-unavagam.appspot.com",
+                        messagingSenderId: "373296548828",
+                        appId: "1:373296548828:web:999a8807dba10ff2cedd19",
+                        measurementId: "G-EFR9XJ3WYQ"
+                    };
+                    // Initialize Firebase
+                    firebase.initializeApp(firebaseConfig);
+                    firebase.analytics();
+                }
             </script>
 
     </body>
