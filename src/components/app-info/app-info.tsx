@@ -13,7 +13,7 @@ export class AppInfo {
                     <ion-buttons slot="start">
                         <ion-back-button defaultHref="/" />
                     </ion-buttons>
-                    <ion-title> <h1> Info - Amma Unavagam - Finder </h1> </ion-title>
+                    <ion-title> <h1> Contact us - Amma Unavagam in Chennai </h1> </ion-title>
                 </ion-toolbar>
             </ion-header>,
 

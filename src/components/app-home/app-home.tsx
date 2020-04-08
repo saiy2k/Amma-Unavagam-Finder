@@ -46,13 +46,13 @@ export class AppHome {
         return [
             <ion-header>
                 <ion-toolbar color="primary">
-                    <ion-title> <h1> Listing - Amaa Unavagam - Finder </h1> </ion-title>
+                    <ion-title> <h1> Amma Unavagam in Chennai</h1> </ion-title>
                     <ion-buttons slot="secondary">
                         {/*
                         <ion-button fill="outline" onClick={ this.nearbyClicked.bind(this) }> List nearby </ion-button>
                         <ion-button fill="outline" href="/map"> Map view </ion-button>
                           */}
-                        <ion-button fill="outline" href="/info">
+                        <ion-button fill="outline" href="/contact-us">
                             <ion-icon slot="icon-only" name="information-outline"></ion-icon>
                         </ion-button>
                     </ion-buttons>
@@ -68,7 +68,7 @@ export class AppHome {
                     <canteen-card index={ index } canteen={ canteen }></canteen-card>
                     ) :
                     <h2 class='center-text empty-message'>
-                        No Canteens for your search. Please refine your search
+                        No Amma Unavagam found in the location you searched for.
                     </h2>
                 }
 
