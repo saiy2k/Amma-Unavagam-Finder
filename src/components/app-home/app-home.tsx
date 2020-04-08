@@ -9,19 +9,35 @@ import * as canteenDB from '../db';
 })
 export class AppHome {
 
+    private infiniteScroll      :   any;
+    private pagesToShow         =   0;
+    private pageSize            =   10;
     private fullList            =   canteenDB.default;
-    private initialList         =   [];
-
-    @State() filteredList       =   [];
-    @State() moreLabel          =   true;
+    private filteredList        =   [];
+    @State() renderList         =   [];
 
     componentWillLoad() {
-        const indices           =   [0, 25, 41, 65, 95, 130, 160, 190, 221, 259, 291, 317, 341, 389];
-        indices.forEach(i => {
-            this.initialList.push(this.fullList[i]);
-            this.initialList.push(this.fullList[i + 1]);
+        this.filteredList       =   [ ...this.fullList ];
+        this.addPageToRenderList(++this.pagesToShow);
+    }
+
+    componentDidLoad() {
+
+        this.infiniteScroll = document.getElementById('infinite-scroll');
+
+        this.infiniteScroll.addEventListener('ionInfinite', (event) => {
+            setTimeout(() => {
+                this.addPageToRenderList(++this.pagesToShow);
+                if (this.renderList.length >= this.filteredList.length) {
+                    event.target.disabled = true;
+                }
+                event.target.complete();
+            }, 300);
         });
-        this.filteredList       =   [ ...this.initialList ];
+    }
+
+    addPageToRenderList(pageNo) {
+        this.renderList         =   this.renderList.concat(this.filteredList.slice((pageNo - 1) * this.pageSize, pageNo * this.pageSize));
     }
 
     searchTermChanged(ev) {
@@ -31,11 +47,14 @@ export class AppHome {
                 return canteen.zoneName.toLowerCase().includes(searchTerm) ||
                     canteen.address.toLowerCase().includes(searchTerm);
             });
-            this.moreLabel      =   false;
         } else {
-            this.filteredList   =   [ ...this.initialList ];
-            this.moreLabel      =   true;
+            this.filteredList   =   [ ...this.fullList ];
         }
+        this.renderList         =   [];
+        this.pagesToShow        =   1;
+        this.addPageToRenderList(this.pagesToShow);
+        this.infiniteScroll.disabled = false;
+        console.log(this.filteredList.length, this.renderList.length);
     }
 
     nearbyClicked() {
@@ -64,7 +83,7 @@ export class AppHome {
 
             <ion-content class="ion-padding">
 
-                { this.filteredList.length > 0 ? this.filteredList.map((canteen, index) =>
+                { this.renderList.length > 0 ? this.renderList.map((canteen, index) =>
                     <canteen-card index={ index } canteen={ canteen }></canteen-card>
                     ) :
                     <h2 class='center-text empty-message'>
@@ -72,17 +91,17 @@ export class AppHome {
                     </h2>
                 }
 
-                { this.moreLabel ?
-                    <h4 class='center-text'>
-                        More relevant canteens will appear as you search
-                    </h4> :
-                    <h2>
-                    </h2>
-                }
+                <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+                    <ion-infinite-scroll-content
+                        loading-spinner="bubbles"
+                        loading-text="Loading more data...">
+                    </ion-infinite-scroll-content>
+                </ion-infinite-scroll>
 
                 <h6 class="center-text"> Amma Unavagam - Finder. Chennai, India. </h6>
 
             </ion-content>
+
         ];
     }
 }
