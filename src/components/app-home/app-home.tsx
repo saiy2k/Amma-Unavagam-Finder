@@ -9,47 +9,35 @@ import * as canteenDB from '../db';
 })
 export class AppHome {
 
-    fullList                    =   canteenDB.default;
-    initialList                 =   [];
-
-    @State()
-    filteredList                =   [];
-
-    @State()
-    moreLabel                   =   true;
+    private infiniteScroll      :   any;
+    private pagesToShow         =   0;
+    private pageSize            =   10;
+    private fullList            =   canteenDB.default;
+    private filteredList        =   [];
+    @State() renderList         =   [];
 
     componentWillLoad() {
-        this.initialList        =   [
-            this.fullList[0],       // Thiruvottyur
-            this.fullList[1],       // Thiruvottyur
-            this.fullList[25],      // Manali
-            this.fullList[26],      // Manali
-            this.fullList[41],      // Madhavaram
-            this.fullList[42],      // Madhavaram
-            this.fullList[65],      // Tondiarpet
-            this.fullList[66],      // Tondiarpet
-            this.fullList[95],      // Royapuram
-            this.fullList[96],      // Royapuram
-            this.fullList[130],     // Thiruvika Nagar
-            this.fullList[131],     // Thiruvika Nagar
-            this.fullList[160],     // Ambattur
-            this.fullList[161],     // Ambattur
-            this.fullList[190],     // Shenoy Nagar
-            this.fullList[191],     // Shenoy Nagar
-            this.fullList[221],     // Nungambakkam
-            this.fullList[222],     // Nungambakkam
-            this.fullList[259],     // Kodambakkam
-            this.fullList[260],     // Kodambakkam
-            this.fullList[291],     // Valasaravakam
-            this.fullList[292],     // Valasaravakam
-            this.fullList[317],     // Alandur
-            this.fullList[318],     // Alandur
-            this.fullList[341],     // Perungudi
-            this.fullList[342],     // Perungudi
-            this.fullList[389],     // Sozhinganallur
-            this.fullList[390],     // Sozhinganallur
-        ];
-        this.filteredList       =   [ ...this.initialList ];
+        this.filteredList       =   [ ...this.fullList ];
+        this.addPageToRenderList(++this.pagesToShow);
+    }
+
+    componentDidLoad() {
+
+        this.infiniteScroll = document.getElementById('infinite-scroll');
+
+        this.infiniteScroll.addEventListener('ionInfinite', (event) => {
+            setTimeout(() => {
+                this.addPageToRenderList(++this.pagesToShow);
+                if (this.renderList.length >= this.filteredList.length) {
+                    event.target.disabled = true;
+                }
+                event.target.complete();
+            }, 300);
+        });
+    }
+
+    addPageToRenderList(pageNo) {
+        this.renderList         =   this.renderList.concat(this.filteredList.slice((pageNo - 1) * this.pageSize, pageNo * this.pageSize));
     }
 
     searchTermChanged(ev) {
@@ -59,11 +47,14 @@ export class AppHome {
                 return canteen.zoneName.toLowerCase().includes(searchTerm) ||
                     canteen.address.toLowerCase().includes(searchTerm);
             });
-            this.moreLabel      =   false;
         } else {
-            this.filteredList   =   [ ...this.initialList ];
-            this.moreLabel      =   true;
+            this.filteredList   =   [ ...this.fullList ];
         }
+        this.renderList         =   [];
+        this.pagesToShow        =   1;
+        this.addPageToRenderList(this.pagesToShow);
+        this.infiniteScroll.disabled = false;
+        console.log(this.filteredList.length, this.renderList.length);
     }
 
     nearbyClicked() {
@@ -74,13 +65,13 @@ export class AppHome {
         return [
             <ion-header>
                 <ion-toolbar color="primary">
-                    <ion-title> <h1> Listing - Amaa Unavagam - Finder </h1> </ion-title>
+                    <ion-title> <h1> Amma Unavagam in Chennai</h1> </ion-title>
                     <ion-buttons slot="secondary">
                         {/*
                         <ion-button fill="outline" onClick={ this.nearbyClicked.bind(this) }> List nearby </ion-button>
                         <ion-button fill="outline" href="/map"> Map view </ion-button>
                           */}
-                        <ion-button fill="outline" href="/info">
+                        <ion-button fill="outline" href="/contact-us">
                             <ion-icon slot="icon-only" name="information-outline"></ion-icon>
                         </ion-button>
                     </ion-buttons>
@@ -92,35 +83,25 @@ export class AppHome {
 
             <ion-content class="ion-padding">
 
-                { this.filteredList.length > 0 ? this.filteredList.map((canteen, index) =>
-                    <ion-card>
-                        <ion-card-header>
-                            <ion-card-title> { canteen.zoneName + ' - ' + (index + 1) } </ion-card-title>
-                        </ion-card-header>
-
-                        <ion-card-content>
-                            { canteen.address }
-                            <br/>
-                            <ion-button href={canteen.mapLocation} target="_blank" rel="noopener" fill="outline" slot="end">Get Directions</ion-button>
-                        </ion-card-content>
-                    </ion-card>
+                { this.renderList.length > 0 ? this.renderList.map((canteen, index) =>
+                    <canteen-card index={ index } canteen={ canteen }></canteen-card>
                     ) :
                     <h2 class='center-text empty-message'>
-                        No Canteens for your search. Please refine your search
+                        No Amma Unavagam found in the location you searched for.
                     </h2>
                 }
 
-                { this.moreLabel ?
-                    <h4 class='center-text'>
-                        More relevant canteens will appear as you search
-                    </h4> :
-                    <h2>
-                    </h2>
-                }
+                <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+                    <ion-infinite-scroll-content
+                        loading-spinner="bubbles"
+                        loading-text="Loading more data...">
+                    </ion-infinite-scroll-content>
+                </ion-infinite-scroll>
 
                 <h6 class="center-text"> Amma Unavagam - Finder. Chennai, India. </h6>
 
             </ion-content>
+
         ];
     }
 }

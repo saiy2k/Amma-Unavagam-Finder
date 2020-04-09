@@ -13,7 +13,7 @@ export class AppInfo {
                     <ion-buttons slot="start">
                         <ion-back-button defaultHref="/" />
                     </ion-buttons>
-                    <ion-title> <h1> Info - Amma Unavagam - Finder </h1> </ion-title>
+                    <ion-title> <h1> Contact us - Amma Unavagam in Chennai </h1> </ion-title>
                 </ion-toolbar>
             </ion-header>,
 
@@ -23,7 +23,8 @@ export class AppInfo {
                     <h5> Saiyasodharan, <a href="https://www.gethugames.in/" target="_blank"> Gethu Games </a> </h5>
                     <h5> <a href="tel://+919952998132"> +919952998132 </a> </h5>
                     <h5> <a href="mailto:support@gethugames.in?Subject=Enquiry regarding Amma Unavagam - Finder"> support@gethugames.in </a> </h5>
-                    v0.1.0
+                    <h5> <a href="https://github.com/saiy2k/amma-unavagam-finder"> Source code in Github </a> </h5>
+                    v0.1.1
                 </p>
             </ion-content>
         ];
