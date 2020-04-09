@@ -12,9 +12,6 @@ export namespace Components {
     }
     interface AppMap {
     }
-    interface AppProfile {
-        "name": string;
-    }
     interface AppRoot {
     }
     interface CanteenCard {
@@ -41,12 +38,6 @@ declare global {
         prototype: HTMLAppMapElement;
         new (): HTMLAppMapElement;
     };
-    interface HTMLAppProfileElement extends Components.AppProfile, HTMLStencilElement {
-    }
-    var HTMLAppProfileElement: {
-        prototype: HTMLAppProfileElement;
-        new (): HTMLAppProfileElement;
-    };
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
     }
     var HTMLAppRootElement: {
@@ -63,7 +54,6 @@ declare global {
         "app-home": HTMLAppHomeElement;
         "app-info": HTMLAppInfoElement;
         "app-map": HTMLAppMapElement;
-        "app-profile": HTMLAppProfileElement;
         "app-root": HTMLAppRootElement;
         "canteen-card": HTMLCanteenCardElement;
     }
@@ -75,9 +65,6 @@ declare namespace LocalJSX {
     }
     interface AppMap {
     }
-    interface AppProfile {
-        "name"?: string;
-    }
     interface AppRoot {
     }
     interface CanteenCard {
@@ -88,7 +75,6 @@ declare namespace LocalJSX {
         "app-home": AppHome;
         "app-info": AppInfo;
         "app-map": AppMap;
-        "app-profile": AppProfile;
         "app-root": AppRoot;
         "canteen-card": CanteenCard;
     }
@@ -100,7 +86,6 @@ declare module "@stencil/core" {
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-info": LocalJSX.AppInfo & JSXBase.HTMLAttributes<HTMLAppInfoElement>;
             "app-map": LocalJSX.AppMap & JSXBase.HTMLAttributes<HTMLAppMapElement>;
-            "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "canteen-card": LocalJSX.CanteenCard & JSXBase.HTMLAttributes<HTMLCanteenCardElement>;
         }

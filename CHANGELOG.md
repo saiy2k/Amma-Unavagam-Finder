@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] - 2020-04-09
+### Added
+- App Icon added
+
 ## [0.1.1] - 2020-04-09
 ### Added
 - Pagination added
