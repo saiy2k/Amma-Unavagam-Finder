@@ -9,7 +9,8 @@ import * as canteenDB from '../db';
 })
 export class AppHome {
 
-    private infiniteScroll      :   any;
+    //private infiniteScroll      :   any;
+    //private loadMoreButton      :   any;
     private pagesToShow         =   0;
     private pageSize            =   10;
     private fullList            =   canteenDB.default;
@@ -23,10 +24,15 @@ export class AppHome {
 
     componentDidLoad() {
 
+
+        /*
         this.infiniteScroll = document.getElementById('infinite-scroll');
+        console.log(this.infiniteScroll);
 
         this.infiniteScroll.addEventListener('ionInfinite', (event) => {
+            console.log('ionInfinite 1');
             setTimeout(() => {
+                console.log('ionInfinite 2');
                 this.addPageToRenderList(++this.pagesToShow);
                 if (this.renderList.length >= this.filteredList.length) {
                     event.target.disabled = true;
@@ -34,6 +40,20 @@ export class AppHome {
                 event.target.complete();
             }, 300);
         });
+         */
+    }
+
+    loadMoreTapped() {
+        if (this.filteredList.length === this.renderList.length) {
+            const toast = document.createElement('ion-toast');
+            toast.message = 'No more data to be shown';
+            toast.duration = 2000;
+
+            document.body.appendChild(toast);
+            return toast.present();
+        } else {
+            this.addPageToRenderList(++this.pagesToShow);
+        }
     }
 
     addPageToRenderList(pageNo) {
@@ -53,7 +73,7 @@ export class AppHome {
         this.renderList         =   [];
         this.pagesToShow        =   1;
         this.addPageToRenderList(this.pagesToShow);
-        this.infiniteScroll.disabled = false;
+        //this.infiniteScroll.disabled = false;
         console.log(this.filteredList.length, this.renderList.length);
     }
 
@@ -91,12 +111,17 @@ export class AppHome {
                     </h2>
                 }
 
+                <center>
+                    <ion-button id="load-more-button" fill="outline" onClick={ this.loadMoreTapped.bind(this) }> Load more </ion-button>
+                </center>
+                { /*
                 <ion-infinite-scroll threshold="100px" id="infinite-scroll">
                     <ion-infinite-scroll-content
                         loading-spinner="bubbles"
                         loading-text="Loading more data...">
                     </ion-infinite-scroll-content>
                 </ion-infinite-scroll>
+                   */ }
 
                 <h6 class="center-text"> Amma Unavagam - Finder. Chennai, India. </h6>
 

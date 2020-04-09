@@ -25,7 +25,7 @@ export class AppInfo {
                     <h5> <a href="tel://+919952998132"> +919952998132 </a> </h5>
                     <h5> <a href="mailto:support@gethugames.in?Subject=Enquiry regarding Amma Unavagam - Finder"> support@gethugames.in </a> </h5>
                     <h5> <a href="https://github.com/saiy2k/amma-unavagam-finder"> Source code in Github </a> </h5>
-                    v0.1.2
+                    v0.1.5
                 </p>
             </ion-content>
         ];

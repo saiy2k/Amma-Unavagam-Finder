@@ -1,5 +1,5 @@
 import { Component, h } from '@stencil/core';
-import { Prop, Listen } from '@stencil/core';
+import { Listen } from '@stencil/core';
 
 declare var HTMLIonToastControllerElement: any;
 
@@ -8,9 +8,6 @@ declare var HTMLIonToastControllerElement: any;
     styleUrl: 'app-root.css'
 })
 export class AppRoot {
-
-    @Prop({ connect: 'ion-toast-controller' })
-    toastCtrl: typeof HTMLIonToastControllerElement;
 
     @Listen("swUpdate", { target: 'window' })
     async onSWUpdate() {
@@ -23,12 +20,18 @@ export class AppRoot {
             return;
         }
 
-        const toast = await this.toastCtrl.create({
-            message: "New version available",
-            showCloseButton: true,
-            closeButtonText: "Reload"
-        });
+        const toast = document.createElement('ion-toast');
+        toast.message = 'New version available';
+        toast.buttons = [{
+            text: 'Update',
+            role: 'cancel',
+            handler: () => {
+                console.log('Cancel clicked');
+            }
+        }];
+        toast.duration = 5000;
 
+        document.body.appendChild(toast);
         await toast.present();
         await toast.onWillDismiss();
 
